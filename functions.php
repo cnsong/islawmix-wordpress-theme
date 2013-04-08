@@ -235,7 +235,6 @@ function list_covering_islamic_law_posts() {
         get_template_part( 'content', get_post_format());
     endwhile;
 }
-add_action( 'init', 'covering_islamic_law');
 add_shortcode( 'covering_islamic_law', 'list_covering_islamic_law_posts' );
 
 ?>
