@@ -21,7 +21,11 @@ get_header(); ?>
 				get_template_part( 'content', 'page' );
 
 				$the_query = new WP_Query( 'category_name=covering-islamic-law');
+				?>
 
+				<div id="add-res-more" class="entry-header">More posts:</div>
+
+				<?php
 			    // The Loop
 			    while ( $the_query->have_posts() ) :
 			        $the_query->the_post();

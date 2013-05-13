@@ -1,5 +1,23 @@
 <?php
 
+
+function wpse7687_pre_get_posts( &$wp_query ) {
+  if ($wp_query->query_vars['category_name'] == 'american-politics'){
+    $wp_query->set( 'category_name', 'american-politics,sharia-bans' );
+  }
+  elseif ($wp_query->query_vars['category_name'] == 'culture-and-practice'){
+    $wp_query->set( 'category_name', 'culture-and-practice,food-and-drink' );
+  }
+  elseif ($wp_query->query_vars['category_name'] == 'islamic-law-and-the-state'){
+    $wp_query->set( 'category_name', 'islamic-law-and-the-state,islamic-constitutionalism' );
+  }
+  elseif ($wp_query->query_vars['category_name'] == 'women-gender-roles-and-sexuality'){
+    $wp_query->set( 'category_name', 'women-gender-roles-and-sexuality,family-law' );
+  }
+}
+
+add_action( 'pre_get_posts', 'wpse7687_pre_get_posts' );
+
 function register_my_menus() {
     register_nav_menus(
         array(
@@ -134,15 +152,31 @@ function kriesi_pagination($pages = '', $range = 2)
 
 function my_category_template( $template ) {
  
-    if( is_category( array( 'islamic-law-in-the-news' ) ) ) // We can search for categories by ID
-        $template = locate_template( array( 'category-roundup.php', 'category.php' ) );
-    elseif( is_category( array( 'editors-picks' ) ) ) // We can search for multiple categories by slug as well
-        $template = locate_template( array( 'category-editors-picks.php', 'category.php' ) );
-    
+    if( is_category( array( 'in-the-courts-and-legislatures', 'in-the-academy' ) ) ) // We can search for categories by ID
+        $template = locate_template( array( 'category-news-roundup.php', 'category.php' ) );
+
     return $template;
 }
 
 add_filter( 'category_template', 'my_category_template' );
+
+function my_tag_template( $template ) {
+
+    $site_url = network_site_url( '/' );
+ 
+    if( !is_tag( array( 'khaled-abou-el-fadl', 'anver-emon', 'mohammad-fadel', 'noah-feldman', 'wael-hallaq', 'sherman-jackson', 'clark-lombardi', 'joseph-lowry', 'chibli-mallat', 'david-powers', 'asif-quraishi-landes', 'intisar-rabb', 'kristen-stilt' ) ) ) // We can search for categories by ID
+    {
+        wp_redirect( $site_url );
+    }
+    else
+    {
+        $template = locate_template( array( 'tag.php' ) );
+    }
+
+    return $template;
+}
+
+add_filter( 'tag_template', 'my_tag_template' );
 
 function islamix_widgets_init() {
     register_sidebar( array(
@@ -236,5 +270,12 @@ function list_covering_islamic_law_posts() {
     endwhile;
 }
 add_shortcode( 'covering_islamic_law', 'list_covering_islamic_law_posts' );
+
+//Add title attribute back to gallery images
+function my_image_titles($atts,$img) {
+    $atts['title'] = trim(strip_tags( $img->post_title ));
+    return $atts;
+}
+add_filter('wp_get_attachment_image_attributes','my_image_titles',10,2);
 
 ?>

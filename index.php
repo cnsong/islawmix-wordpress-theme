@@ -21,12 +21,29 @@ $the_query = new WP_Query( 'tag=home-feature' );
 
 if ($the_query->have_posts()) {
 	$the_query->the_post();
+
+	$origpostdate = get_the_date($d, $the_post->post_parent);
+	$origposttime = get_the_time($d, $the_post->post_parent);
+	$dateline = $origpostdate.' '.$origposttime;
+
 	?>
 	<div class="featured-area">
-		<div class="alignleft feature-image"><?php the_post_thumbnail("thumbnail"); ?></div>
-		<div class="featured-post"><?php get_template_part( 'content', get_post_format() ); ?></div>
+		<?php 
+		if ( has_post_thumbnail() ) { ?>
+			<div class="alignleft feature-image"><?php the_post_thumbnail("thumbnail"); ?></div>
+		<?php } ?>
+		<div class="featured-post">
+			<header class="entry-header">
+				<h1 class="entry-title">
+					<a href="<?php the_permalink(); ?>" title="<?php echo esc_attr( sprintf( __( 'Permalink to %s', 'twentytwelve' ), the_title_attribute( 'echo=0' ) ) ); ?>" rel="bookmark"><?php the_title(); ?></a>
+				</h1>
+				<div class="entry-date"><?php echo $dateline; ?></div>
+			</header>
+			<div class="entry-content"><?php the_excerpt(); ?></div>
+		</div>
 	</div>
-<?php
+
+	<?php
 }
 
 wp_reset_query(); 
@@ -37,9 +54,17 @@ wp_reset_query();
 		<?php if ( have_posts() ) : ?>
 
 			<?php /* Start the Loop */ ?>
-			<?php while ( have_posts() ) : the_post(); ?>
-				<?php get_template_part( 'content', get_post_format() ); ?>
-			<?php endwhile; ?>
+			<?php 
+
+			while ( have_posts() ) : the_post();
+
+				if ( !has_tag( 'home-feature') ) {
+					get_template_part( 'content', get_post_format() );
+				}
+
+			endwhile; 
+
+			?>
 
 			<?php kriesi_pagination(); ?>
 

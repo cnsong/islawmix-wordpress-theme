@@ -12,6 +12,13 @@ get_header(); ?>
 	<div id="primary" class="site-content">
 		<div id="content" role="main">
 
+			<div class="breadcrumbs">
+				<?php if(function_exists('bcn_display'))
+				{
+				    bcn_display();
+				}?>
+			</div>
+
 			<?php while ( have_posts() ) : the_post(); ?>
 
 				<?php get_template_part( 'content', get_post_format() ); ?>
@@ -53,14 +60,14 @@ get_header(); ?>
 				<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
 
 				<div class="post-social-share tumblr">
-					<a href="http://www.tumblr.com/share/link?url=<?php echo urlencode(get_permalink()) ?>&name=<?php echo urlencode(the_title()) ?>" title="Share on Tumblr" style="display:inline-block; text-indent:-9999px; overflow:hidden; width:129px; height:20px; background:url('http://platform.tumblr.com/v1/share_3.png') top left no-repeat transparent;">Share on Tumblr</a>
+					<a href="http://www.tumblr.com/share/link?url=<?php echo urlencode("http://islawmix.org/") ?>&name=<?php echo urlencode(the_title()) ?>" title="Share on Tumblr" style="display:inline-block; text-indent:-9999px; overflow:hidden; width:129px; height:20px; background:url('http://platform.tumblr.com/v1/share_3.png') top left no-repeat transparent;">Share on Tumblr</a>
 				</div>
 				<script src="http://platform.tumblr.com/v1/share.js"></script>
 
 				<div class="post-social-share email">
 					<span class='st_email_large' displayText='Email'></span>
 				</div>
-
+				
 			<?php endwhile; // end of the loop. ?>
 
 		</div><!-- #content -->

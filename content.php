@@ -42,8 +42,6 @@
 			<?php 
 			if ( is_single() ) :
 				the_content( __( 'Continue reading <span class="meta-nav">&rarr;</span>', 'twentytwelve' ) );
-			else :
-				the_excerpt();
 			endif; // is_single() 
 			?>
 			<?php wp_link_pages( array( 'before' => '<div class="page-links">' . __( 'Pages:', 'twentytwelve' ), 'after' => '</div>' ) ); ?>

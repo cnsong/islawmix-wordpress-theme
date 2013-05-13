@@ -17,7 +17,7 @@ get_header(); ?>
 
 $cat_id = get_query_var( 'cat' );
 
-$the_query = new WP_Query( 'tag=featured&cat='.$cat_id );
+$the_query = new WP_Query( 'tag=feature-american-politics&category_name=american-politics,sharia-bans' );
 
 if ($the_query->have_posts()) {
 	$the_query->the_post();
@@ -46,20 +46,19 @@ if ($the_query->have_posts()) {
 	<?php
 }
 
-wp_reset_query(); 
-
 ?>
 	<section id="primary" class="site-content">
 		<div id="content" role="main">
 
 		<?php
 		
-		$tag = get_term_by('slug', 'featured', 'post_tag');
-		$tag_id =  $tag->term_id; 
+		$tag = get_term_by('slug', 'feature-american-politics', 'post_tag');
+		$tag_id =  $tag->term_id;
 
 		$args = array(
-			'cat' => $cat_id,
-			'tag__not_in' => array( $tag_id  )
+			'category_name' => 'american-politics,sharia-bans',
+			'tag__not_in' => array( $tag_id  ),
+			'paged' => $paged
 		);
 
 		$the_query = new WP_Query( $args );
@@ -70,9 +69,9 @@ wp_reset_query();
 			<header class="entry-header">
 				<h1 class="entry-title"><?php printf( __( '%s', 'twentytwelve' ), '<div class="title-bold-upp">' . single_cat_title( '', false ) . '</div>' ); ?></h1>
 			</header>
-
 			<div class="scholar_related_posts">
-
+				<h1>Recent Related Posts:</h1>
+			
 			<?php
 
 			/* Start the Loop */
@@ -87,14 +86,14 @@ wp_reset_query();
 				get_template_part( 'content', get_post_format() );
 
 			endwhile;
-			
+
 			?>
 
 			</div>
 
 			<?php
 
-			kriesi_pagination();
+			kriesi_pagination($the_query->max_num_pages);
 
 			// twentytwelve_content_nav( 'nav-below' );
 			?>
@@ -102,6 +101,14 @@ wp_reset_query();
 		<?php else : ?>
 			<?php get_template_part( 'content', 'none' ); ?>
 		<?php endif; ?>
+
+		<?php
+		$test_query = new WP_Query( 'page_id=8120' );
+		$test_query->the_post();
+		?>
+		<div class="entry-content add-info">
+			<?php the_content( __( 'Continue reading <span class="meta-nav">&rarr;</span>', 'twentytwelve' ) ); ?>
+		</div>
 
 		</div><!-- #content -->
 	</section><!-- #primary -->

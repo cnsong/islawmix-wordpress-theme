@@ -22,10 +22,23 @@ get_header(); ?>
 	<section id="primary" class="site-content">
 		<div id="content" role="main">
 			<header class="entry-header">
-				<h1 class="entry-title">Our Scholars</h1>
+				<h1 class="entry-title">
+					<div class="title-bold-upp">Our Scholars</div>
+				</h1>
 			</header>
 
 		<?php if ( have_posts() ) : ?>
+
+			<?php
+			$args = array(
+				'post_type' => 'islawmix_scholars',
+				'meta_key' => 'scholar_last_name',
+				'orderby' => 'meta_value',
+				'order' => 'ASC',
+				'posts_per_page' => -1
+			);
+			query_posts( $args );
+			?>
 
 			<div class="entry-header-text">
 				<p>islawmix experts are thirteen of the leading experts in Islamic law. islawmix experts have advanced degrees in American law (JD) and in the study of Islamic law (PhD), or the equivalent, and teach issues of contemporary Islamic law and society in American law schools. They have been recognized by their peers; by their publications; and by prestigious legal, academic, and other institutions for their timely scholarship on issues of Islamic law. They represent a diverse range of ideological and scholarly perspectives, experiences, and approaches, and are positioned to serve as credible, non-partisan sources.</p>

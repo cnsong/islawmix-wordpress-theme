@@ -19,11 +19,22 @@
 <html xmlns:fb="http://ogp.me/ns/fb#" <?php language_attributes(); ?>>
 <!--<![endif]-->
 <head>
+<?php
+// Do not index author, date archive, category, tag and search result
+if( is_author() | is_tag() ) {
+  _e('<meta name="robots" content="noindex,follow" />');
+} else {
+  _e('<meta name="robots" content="index,follow" />');
+} ?>
 <meta charset="<?php bloginfo( 'charset' ); ?>" />
 <meta name="viewport" content="width=device-width" />
 <title><?php wp_title( '|', true, 'right' ); ?></title>
 <link rel="profile" href="http://gmpg.org/xfn/11" />
 <link rel="pingback" href="<?php bloginfo( 'pingback_url' ); ?>" />
+<script type="text/javascript" async="" src="http://www.google-analytics.com/ga.js"></script>
+<script type="text/javascript">var switchTo5x=true;</script>
+<script type="text/javascript" src="http://w.sharethis.com/button/buttons.js"></script>
+<script type="text/javascript">stLight.options({publisher: "46365cb1-2a20-44cd-9b24-d34c5c228cde", doNotHash: true, doNotCopy: true, hashAddressBar: true});</script>
 <?php // Loads HTML5 JavaScript file to add support for HTML5 elements in older IE versions. ?>
 <!--[if lt IE 9]>
 <script src="<?php echo get_template_directory_uri(); ?>/js/html5.js" type="text/javascript"></script>
